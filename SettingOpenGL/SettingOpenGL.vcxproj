@@ -37,18 +37,28 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Label="UserMacros">
+    <NuGetPackageImportStamp>870da6c7</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\freeglut;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\freeglut;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\freeglut;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\freeglut;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Dependencies\freeglut;Dependencies\glew</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\freeglut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\freeglut;C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\freeglut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -60,19 +70,45 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Dependencies\freeglut;Dependencies\glew</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\freeglut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\freeglut;C:\Users\Nick\Source\Repos\SettingOpenGL\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\glew;C:\Users\Nick\Source\Repos\SettingOpenGL\Dependencies\freeglut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\GameModels.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Core\Shader_Loader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\GameModels.h" />
+    <ClInclude Include="Core\Shader_Loader.h" />
+    <ClInclude Include="Core\VertexFormat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Shaders\Fragment_Shader.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </None>
+    <None Include="Shaders\Vertex_Shader.glsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\glm.0.9.7.1\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.7.1\build\native\glm.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\glm.0.9.7.1\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.7.1\build\native\glm.targets'))" />
+  </Target>
 </Project>
