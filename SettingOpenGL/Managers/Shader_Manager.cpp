@@ -40,7 +40,7 @@ std::string Shader_Manager::ReadShader(const std::string& filename)
 	return shaderCode;
 }
 
-GLuint Shader_Manager::CreateShader(GLenum shaderType, const std::string& source, std::string& shaderName)
+GLuint Shader_Manager::CreateShader(GLenum shaderType, const std::string& source, const std::string& shaderName)
 {
 	int compile_result = 0;
 
@@ -72,8 +72,8 @@ void Shader_Manager::CreateProgram(const std::string& shaderName, const std::str
 	std::string fragment_shader_code = ReadShader(fragmentShaderFilename);
 
 	// NOT SURE IF THIS IS RIGHT. LOOK HERE FIRST IF YOU HAVE ISSUES.
-	GLuint vertex_shader = CreateShader(GL_VERTEX_SHADER, vertex_shader_code, vertexShaderFilename.c_str);
-	GLuint fragment_shader = CreateShader(GL_FRAGMENT_SHADER, fragment_shader_code, fragmentShaderFilename.c_str);
+	GLuint vertex_shader = CreateShader(GL_VERTEX_SHADER, vertex_shader_code, vertexShaderFilename);
+	GLuint fragment_shader = CreateShader(GL_FRAGMENT_SHADER, fragment_shader_code, fragmentShaderFilename);
 
 	int link_result = 0;
 

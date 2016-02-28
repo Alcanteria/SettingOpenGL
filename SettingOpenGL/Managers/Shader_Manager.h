@@ -3,8 +3,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "../Dependencies/freeglut/freeglut.h"
 #include "../Dependencies/glew/glew.h"
+#include "../Dependencies/freeglut/freeglut.h"
 
 namespace Managers
 {
@@ -21,7 +21,7 @@ namespace Managers
 	private:
 
 		std::string ReadShader(const std::string& source);
-		GLuint CreateShader(GLenum shaderType, const std::string& source, std::string& shaderNAme);
+		GLuint CreateShader(GLenum shaderType, const std::string& source, const std::string& shaderNAme);
 		static std::map<std::string, GLuint> programs;
 	};
 }
