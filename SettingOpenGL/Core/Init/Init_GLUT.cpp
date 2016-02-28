@@ -2,12 +2,17 @@
 
 using namespace Core::Init;
 
+Core::IListener* Init_GLUT::listener = NULL;
+Core::WindowInfo Init_GLUT::windowInformation;
+
 void Init_GLUT::init(const Core::WindowInfo& windowInfo, const Core::ContextInfo& contextInfo, const Core::FrameBufferInfo& frameBufferInfo)
 {
 	// Need to create these fake arguments.
 	int fakeargc = 1;
 	char *fakeargv[] = { "fake", NULL };
 	glutInit(&fakeargc, fakeargv);
+
+	windowInformation = windowInfo;
 
 	if (contextInfo.core)
 	{
@@ -63,14 +68,35 @@ void Init_GLUT::idleCallBack(void)
 
 void Init_GLUT::displayCallBack()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glutSwapBuffers();
+	if (listener)
+	{
+		listener->notifyBeginFrame();
+		listener->notifyDisplayFrame();
+		
+		glutSwapBuffers();
+
+		listener->notifyEndFrame();
+	}
+
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.0, 0.0, 0.0, 1.0);
+	//glutSwapBuffers();
 }
 
 void Init_GLUT::reshapeCallBack(int width, int height)
 {
+	if (windowInformation.isReshapable == true)
+	{
+		listener->notifyReshape(width, height, windowInformation.width, windowInformation.height);
+	}
 
+	windowInformation.width = width;
+	windowInformation.height = height;
+}
+
+void Init_GLUT::SetListener(Core::IListener*& iListener)
+{
+	listener = iListener;
 }
 
 void Init_GLUT::closeCallBack()
